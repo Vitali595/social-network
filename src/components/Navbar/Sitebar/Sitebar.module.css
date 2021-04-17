@@ -1,0 +1,17 @@
+
+.item img {
+    width: 35px;
+    height: 35px;
+    border-radius: 30px;
+    margin: 5px;
+}
+
+.name {
+    vertical-align: top;
+    font-size: 10px;
+    text-align: center;
+}
+
+.nav {
+    display: inline-block;
+}

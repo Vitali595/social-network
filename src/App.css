@@ -1,0 +1,39 @@
+.app-wrapper {
+    margin: 0 auto;
+    display: grid;
+    width: 1200px;
+    grid-template-areas: "h h" "n c";
+
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    /* grid-gap: 10px; */
+}
+
+.app-wrapper-content {
+    grid-area: c;
+    background-color: #7087ae;
+    border-radius: 5px;
+    border-top: #e5945b solid 5px;
+    border-left: #e5945b solid 5px;
+    border-bottom: #9fbaac solid 5px;
+    border-right: #9fbaac solid 5px;
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+/messages
+/dialogs
+
+/dialogs/3
+/dialogs/2
+
+*/
