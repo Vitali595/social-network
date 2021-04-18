@@ -1,5 +1,5 @@
 import React from "react";
-import s from "./Sitebar.module.css";
+import s from "./Sidebar.module.css";
 
 type FriendsPropsType = {
     name: string
