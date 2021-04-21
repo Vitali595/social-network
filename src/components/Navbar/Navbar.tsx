@@ -2,13 +2,10 @@ import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import {Friends} from "./Sidebar/Friends";
-import {SidebarType} from "../../redux/store";
+import {MapStateSidebarType} from "./NavbarContainer";
 
-type NavbarPropsType = {
-    state: SidebarType
-}
 
-const Navbar = (props: NavbarPropsType) => {
+const Navbar = (props: MapStateSidebarType) => {
 
     let myFriends = props.state.friends.map(f => <Friends name={f.name}/>)
 

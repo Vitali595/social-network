@@ -1,14 +1,10 @@
 import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
-import {DialogsPageType} from "../../redux/store";
 import Message from "./Message/Message";
+import {MapDispatchPropsType, MapStatePropsType} from "./DialogsContainer";
 
-type DialogsPropsType = {
-    updateNewMessageBody: (body: string) => void
-    onSendMessage: () => void
-    dialogsPage: DialogsPageType
-}
+type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
 const Dialogs = (props: DialogsPropsType) => {
 
@@ -20,7 +16,7 @@ const Dialogs = (props: DialogsPropsType) => {
     let newMessageBody = state.newMessageBody
 
     let onSendMessageClick = () => {
-        props.onSendMessage()
+        props.sendMessage(newMessageBody)
     }
 
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
