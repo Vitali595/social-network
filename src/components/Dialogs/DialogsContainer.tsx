@@ -10,8 +10,8 @@ export type MapStatePropsType = {
 }
 
 export type MapDispatchPropsType = {
+    sendMessage: () => void
     updateNewMessageBody: (body: string) => void
-    sendMessage: (body: string) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -22,10 +22,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        updateNewMessageBody: () => {
+        sendMessage: () => {
             dispatch(sendMessageCreator())
         },
-        sendMessage: (body: string) => {
+        updateNewMessageBody: (body: string) => {
             dispatch(updateNewMessageBodyCreator(body))
         }
     }

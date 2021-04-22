@@ -7,7 +7,7 @@ import {MapStateSidebarType} from "./NavbarContainer";
 
 const Navbar = (props: MapStateSidebarType) => {
 
-    let myFriends = props.state.friends.map(f => <Friends name={f.name}/>)
+    let myFriends = props.state.friends.map(f => <Friends key={f.id} name={f.name}/>)
 
     return (
         <nav className={s.nav}>
