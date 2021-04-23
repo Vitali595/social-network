@@ -10,7 +10,7 @@ export type SidebarType = {
 }
 
 
-let initialState: SidebarType = {
+const initialState: SidebarType = {
     friends: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrew'},

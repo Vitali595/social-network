@@ -2,10 +2,10 @@ import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import {Friends} from "./Sidebar/Friends";
-import {MapStateSidebarType} from "./NavbarContainer";
+import {SidebarPropsType} from "./NavbarContainer";
 
 
-const Navbar = (props: MapStateSidebarType) => {
+const Navbar = (props: SidebarPropsType) => {
 
     let myFriends = props.state.friends.map(f => <Friends key={f.id} name={f.name}/>)
 

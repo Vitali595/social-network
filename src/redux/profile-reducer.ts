@@ -19,9 +19,9 @@ const initialState = {
     newPostText: "it"
 }
 
-export type InitialStatePostType = typeof initialState
+export type InitialStateType = typeof initialState
 
-const profileReducer = (state: InitialStatePostType = initialState, action: ActionsTypes): InitialStatePostType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostType = {

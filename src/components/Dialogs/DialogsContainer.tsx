@@ -5,22 +5,24 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from 'redux';
 
-export type MapStatePropsType = {
+type MapStateToPropsType = {
     dialogsPage: InitialStateType
 }
 
-export type MapDispatchPropsType = {
+type MapDispatchToPropsType = {
     sendMessage: () => void
     updateNewMessageBody: (body: string) => void
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
       dialogsPage: state.dialogsPage
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         sendMessage: () => {
             dispatch(sendMessageCreator())

@@ -1,14 +1,7 @@
 import React, {RefObject} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {PostType} from "../../../redux/profile-reducer";
-
-type MyPostsPropsType = {
-    posts: Array<PostType>
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-}
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 const MyPosts = (props: MyPostsPropsType) => {
 
