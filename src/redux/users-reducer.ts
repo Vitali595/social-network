@@ -3,10 +3,10 @@ import {ActionsTypes} from "./redux-store";
 export type UserType = {
     id: number
     followed: boolean
-    fullName: string
+    name: string
     status: string
     location: { city: string, country: string }
-    photoUrl: string
+    photos:  any
 }
 
 export const FOLLOW = "FOLLOW"
