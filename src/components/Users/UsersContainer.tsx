@@ -14,7 +14,7 @@ import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
 
-type mapStateToPropsType = {
+type MapStateToPropsType = {
     users: Array<UserType>
     pageSize: number
     totalUsersCount: number
@@ -31,7 +31,7 @@ type mapDispatchToPropsType = {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-export type UsersContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
+export type UsersContainerPropsType = MapStateToPropsType & mapDispatchToPropsType
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
 
@@ -69,7 +69,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
