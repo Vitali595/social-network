@@ -1,11 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import profileReducer, {
-    addPostActionCreator,
-    setStatus,
-    setUserProfile,
-    updateNewPostTextActionCreator
-} from "./profile-reducer";
-import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
+import profileReducer, {addPostActionCreator, setStatus, setUserProfile} from "./profile-reducer";
+import dialogsReducer, {sendMessageCreator} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer, {
     followSuccess,
@@ -29,8 +24,7 @@ export const rootReducer = combineReducers({
     form: formReducer
 })
 
-export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof sendMessageCreator>
     | ReturnType<typeof followSuccess> | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUserCount> | ReturnType<typeof toggleIsFetching>
