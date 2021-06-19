@@ -30,15 +30,14 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamType> & ProfileCon
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
-        if (!userId && this.props.authorizedUserId !== null) {
-            userId = this.props.authorizedUserId.toString()
-            if (!userId) {
-                this.props.history.push("/login")
-            }
+        let userId = +this.props.match.params.userId
+        if (!userId) {
+            this.props.isAuth
+            ? userId = Number(this.props.authorizedUserId)
+            : this.props.history.push("/login")
         }
-        this.props.getUserProfile(+userId)
-        this.props.getStatus(+userId)
+        this.props.getUserProfile(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
