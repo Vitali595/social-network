@@ -22,7 +22,7 @@ export const Users: React.FC<UsersPropsType> = (
 ) => {
 
     return <div>
-        <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize}
+        <Paginator totalItemsCount={totalUsersCount} pageSize={pageSize}
                    currentPage={currentPage} onPageChanged={onPageChanged}/>
         <div>
             {users.map(u => <User user={u} follow={follow} unfollow={unfollow}

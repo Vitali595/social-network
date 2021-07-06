@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import profileReducer, {addPostActionCreator, deletePost, setStatus, setUserProfile} from "./profile-reducer";
 import dialogsReducer, {sendMessageCreator} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
@@ -36,7 +36,9 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 export default store
 
