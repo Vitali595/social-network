@@ -1,4 +1,4 @@
-import {ActionsTypes, AppStateType} from "./redux-store";
+import {AppStateType} from "./redux-store";
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
@@ -16,14 +16,6 @@ export type UserType = {
     }
 }
 
-export const FOLLOW = "FOLLOW"
-export const UNFOLLOW = "UNFOLLOW"
-export const SET_USERS = "SET_USERS"
-export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-export const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
-export const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
-export const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS"
-
 const initialState = {
     users: [] as Array<UserType>,
     pageSize: 10,
@@ -34,28 +26,31 @@ const initialState = {
 }
 
 export type InitialStateType = typeof initialState
+type ActionsType = ReturnType<typeof followSuccess> | ReturnType<typeof unfollowSuccess> | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUserCount>
+    | ReturnType<typeof toggleIsFetching> | ReturnType<typeof toggleFollowingProgress>
 
-const usersReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case FOLLOW:
+        case "samurai-network/users/FOLLOW":
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
             }
-        case UNFOLLOW:
+        case "samurai-network/users/UNFOLLOW":
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
             }
-        case SET_USERS:
+        case "samurai-network/users/SET_USERS":
             return {...state, users: action.users}
-        case SET_CURRENT_PAGE:
+        case "samurai-network/users/SET_CURRENT_PAGE":
             return {...state, currentPage: action.currentPage}
-        case SET_TOTAL_USERS_COUNT:
+        case "samurai-network/users/SET_TOTAL_USERS_COUNT":
             return {...state, totalUserCount: action.totalUsersCount}
-        case TOGGLE_IS_FETCHING:
+        case "samurai-network/users/TOGGLE_IS_FETCHING":
             return {...state, isFetching: action.isFetching}
-        case TOGGLE_IS_FOLLOWING_PROGRESS:
+        case "samurai-network/users/TOGGLE_IS_FOLLOWING_PROGRESS":
             return {
                 ...state,
                 followingInProgress: action.isFetching
@@ -68,20 +63,20 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionsTyp
 }
 
 
-export const followSuccess = (userId: number) => ({type: FOLLOW, userId}) as const
-export const unfollowSuccess = (userId: number) => ({type: UNFOLLOW, userId}) as const
-export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users}) as const
-export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage}) as const
+export const followSuccess = (userId: number) => ({type: "samurai-network/users/FOLLOW", userId}) as const
+export const unfollowSuccess = (userId: number) => ({type: "samurai-network/users/UNFOLLOW", userId}) as const
+export const setUsers = (users: Array<UserType>) => ({type: "samurai-network/users/SET_USERS", users}) as const
+export const setCurrentPage = (currentPage: number) => ({type: "samurai-network/users/SET_CURRENT_PAGE", currentPage}) as const
 export const setTotalUserCount = (totalUsersCount: number) => ({
-    type: SET_TOTAL_USERS_COUNT,
+    type: "samurai-network/users/SET_TOTAL_USERS_COUNT",
     totalUsersCount
 }) as const
 export const toggleIsFetching = (isFetching: boolean) => ({
-    type: TOGGLE_IS_FETCHING,
+    type: "samurai-network/users/TOGGLE_IS_FETCHING",
     isFetching
 }) as const
 export const toggleFollowingProgress = (isFetching: boolean, userId: number) => ({
-    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    type: "samurai-network/users/TOGGLE_IS_FOLLOWING_PROGRESS",
     isFetching,
     userId
 }) as const
@@ -105,7 +100,7 @@ const followUnfollowFlow = async (dispatch: any, userId: number, apiMethod: any,
     dispatch(toggleFollowingProgress(false, userId))
 }
 
-export const follow = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> =>
+export const follow = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> =>
     async (dispatch: Dispatch) => {
         followUnfollowFlow(dispatch, userId, usersAPI.follow, followSuccess)
     }
@@ -113,5 +108,3 @@ export const follow = (userId: number): ThunkAction<void, AppStateType, unknown,
 export const unfollow = (userId: number) => async (dispatch: Dispatch) => {
     followUnfollowFlow(dispatch, userId, usersAPI.unfollow, unfollowSuccess)
 }
-
-export default usersReducer

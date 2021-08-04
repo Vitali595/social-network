@@ -1,4 +1,4 @@
-import {ActionsTypes, AppStateType} from "./redux-store";
+import {AppStateType} from "./redux-store";
 import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
@@ -16,15 +16,15 @@ type KeyType = {
 export type ProfileType = {
     aboutMe: string
     contacts: KeyType,
-        // {
-        // facebook: string
-        // website: string | null
-        // vk: string
-        // twitter: string
-        // instagram: string
-        // youtube: string | null
-        // github: string
-        // mainLink: string | null},
+    // {
+    // facebook: string
+    // website: string | null
+    // vk: string
+    // twitter: string
+    // instagram: string
+    // youtube: string | null
+    // github: string
+    // mainLink: string | null},
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -34,10 +34,6 @@ export type ProfileType = {
         large: string
     }
 }
-
-export const ADD_POST = "ADD_POST"
-export const SET_USER_PROFILE = "SET_USER_PROFILE"
-export const SET_STATUS = "SET_STATUS"
 
 const initialState = {
     posts: [
@@ -51,10 +47,12 @@ const initialState = {
 }
 
 export type InitialStateType = typeof initialState
+type ActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus> | ReturnType<typeof deletePost> | ReturnType<typeof savePhotoSuccess>
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case ADD_POST: {
+        case "samurai-network/profile/ADD_POST": {
             let newPost: PostType = {
                 id: 5,
                 message: action.newPostText,
@@ -65,16 +63,16 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 posts: [...state.posts, newPost],
             }
         }
-        case SET_STATUS: {
+        case "samurai-network/profile/SET_STATUS": {
             return {...state, status: action.status}
         }
-        case SET_USER_PROFILE: {
+        case "samurai-network/profile/SET_USER_PROFILE": {
             return {...state, profile: action.profile}
         }
-        case "DELETE_POST": {
+        case "samurai-network/profile/DELETE_POST": {
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         }
-        case "SAVE_PHOTO_SUCCESS": {
+        case "samurai-network/profile/SAVE_PHOTO_SUCCESS": {
             return {...state, profile: {...state.profile, photos: action.photos}}
         }
         default:
@@ -83,11 +81,11 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
 }
 
 
-export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
-export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
-export const deletePost = (postId: number) => ({type: "DELETE_POST", postId} as const)
-export const savePhotoSuccess = (photos: any) => ({type: "SAVE_PHOTO_SUCCESS", photos} as const)
+export const addPostActionCreator = (newPostText: string) => ({type: "samurai-network/profile/ADD_POST", newPostText} as const)
+export const setUserProfile = (profile: ProfileType) => ({type: "samurai-network/profile/SET_USER_PROFILE", profile} as const)
+export const setStatus = (status: string) => ({type: "samurai-network/profile/SET_STATUS", status} as const)
+export const deletePost = (postId: number) => ({type: "samurai-network/profile/DELETE_POST", postId} as const)
+export const savePhotoSuccess = (photos: any) => ({type: "samurai-network/profile/SAVE_PHOTO_SUCCESS", photos} as const)
 
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     const response = await usersAPI.getProfile(userId)
@@ -123,5 +121,3 @@ export const saveProfile = (profile: ProfileType) => async (dispatch: any, getSt
         return Promise.reject(message)
     }
 }
-
-export default profileReducer

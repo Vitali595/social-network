@@ -1,8 +1,8 @@
-import profileReducer, {
+import {
     addPostActionCreator,
     deletePost,
     InitialStateType,
-    PostType,
+    PostType, profileReducer,
     ProfileType
 } from "./profile-reducer";
 

@@ -1,7 +1,3 @@
-import {ActionsTypes, AppStateType} from "./redux-store";
-import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
 import {getAuthUserData} from "./auth-reducer";
 
 const initialState = {
@@ -9,10 +5,11 @@ const initialState = {
 }
 
 export type InitialStateType = typeof initialState
+type ActionsType = ReturnType<typeof initializedSuccess>
 
-const appReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case "INITIALIZED_SUCCESS":
+        case "samurai-network/app/INITIALIZED_SUCCESS":
             return {
                 ...state,
                 initialized: true
@@ -23,7 +20,7 @@ const appReducer = (state: InitialStateType = initialState, action: ActionsTypes
 }
 
 
-export const initializedSuccess = () => ({type: "INITIALIZED_SUCCESS"} as const)
+export const initializedSuccess = () => ({type: "samurai-network/app/INITIALIZED_SUCCESS"} as const)
 
 export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(getAuthUserData())

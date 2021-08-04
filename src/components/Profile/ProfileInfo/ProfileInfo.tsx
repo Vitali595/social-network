@@ -57,7 +57,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                 {isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
 
                 {editMode
-                    ? <ProfileDataFormReduxForm initialValues={profile} onSubmit={onSubmit}/>
+                    ? <ProfileDataFormReduxForm initialValues={profile} onSubmit={onSubmit} profile={profile}/>
                     : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={() => setEditMode(true)}/>}
 
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
