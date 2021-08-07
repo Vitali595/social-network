@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {HashRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -21,8 +21,18 @@ type AppPropsType = MapStateToPropsType & {
 
 class App extends React.Component<AppPropsType> {
 
+    catchAllUnhandledErrors = (promiseRejectionEvent: any) => {
+        alert("Some error occured")
+        // console.log(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -30,18 +40,24 @@ class App extends React.Component<AppPropsType> {
             return <Preloader/>
         }
         return (
-            <div className='app-wrapper'>
+            <div className="app-wrapper">
                 <HeaderContainer/>
                 <NavbarContainer/>
-                <div className='app-wrapper-content'>
-                    <Route path='/dialogs'
-                           render={withSuspense(DialogsContainer)}/>
-                    <Route path='/profile/:userId?'
-                           render={withSuspense(ProfileContainer)}/>
-                    <Route path='/users'
-                           render={() => <UsersContainer/>}/>
-                    <Route path='/login'
-                           render={() => <Login/>}/>
+                <div className="app-wrapper-content">
+                    <Switch>
+                        <Route exact path="/"
+                               render={() => <Redirect to={"/profile"}/>}/>
+                        <Route path="/dialogs"
+                               render={withSuspense(DialogsContainer)}/>
+                        <Route path="/profile/:userId?"
+                               render={withSuspense(ProfileContainer)}/>
+                        <Route path="/users"
+                               render={() => <UsersContainer/>}/>
+                        <Route path="/login"
+                               render={() => <Login/>}/>
+                        <Route path="*"
+                               render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
         )

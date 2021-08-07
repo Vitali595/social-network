@@ -1,7 +1,8 @@
 import {getAuthUserData} from "./auth-reducer";
 
 const initialState = {
-    initialized: false
+    initialized: false,
+    globalError: null
 }
 
 export type InitialStateType = typeof initialState

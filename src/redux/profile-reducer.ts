@@ -81,8 +81,14 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 
-export const addPostActionCreator = (newPostText: string) => ({type: "samurai-network/profile/ADD_POST", newPostText} as const)
-export const setUserProfile = (profile: ProfileType) => ({type: "samurai-network/profile/SET_USER_PROFILE", profile} as const)
+export const addPostActionCreator = (newPostText: string) => ({
+    type: "samurai-network/profile/ADD_POST",
+    newPostText
+} as const)
+export const setUserProfile = (profile: ProfileType) => ({
+    type: "samurai-network/profile/SET_USER_PROFILE",
+    profile
+} as const)
 export const setStatus = (status: string) => ({type: "samurai-network/profile/SET_STATUS", status} as const)
 export const deletePost = (postId: number) => ({type: "samurai-network/profile/DELETE_POST", postId} as const)
 export const savePhotoSuccess = (photos: any) => ({type: "samurai-network/profile/SAVE_PHOTO_SUCCESS", photos} as const)
@@ -98,9 +104,13 @@ export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
 }
 
 export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
-    const response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status))
+    try {
+        const response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (error) {
+        alert("Some error")
     }
 }
 
